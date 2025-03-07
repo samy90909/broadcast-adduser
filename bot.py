@@ -28,7 +28,10 @@ client = TelegramClient(StringSession(SESSION_STRING), API_ID, API_HASH)
 async def main():
     print("Starting Telegram Bot...")
     try:
-        await client.start()
+        await client.connect()
+        if not await client.is_user_authorized():
+            print("Error: Session string is invalid or expired. Please generate a new one.")
+            return
         print("\nBot is now running!")
         await client.run_until_disconnected()
     except Exception as e:
