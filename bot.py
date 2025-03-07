@@ -5,16 +5,27 @@ import asyncio
 import shlex
 import random
 
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
 # Configuration
-API_ID = 29563112  # Your API ID
-API_HASH = 'd15f1b48e5746765542748e72146c4fe'   # Your API hash
-SESSION_NAME = 'smart_broadcaster' # Your session name
-ADMIN_ID = 8135139895 # Your Telegram ID
-DELAY_SECONDS = 15 # Delay in seconds between messages 
+API_ID = int(os.getenv('API_ID', '29563112'))  # Your API ID
+API_HASH = os.getenv('API_HASH', 'd15f1b48e5746765542748e72146c4fe')   # Your API hash
+SESSION_NAME = os.getenv('SESSION_NAME', 'smart_broadcaster') # Your session name
+ADMIN_ID = int(os.getenv('ADMIN_ID', '8135139895')) # Your Telegram ID
+DELAY_SECONDS = int(os.getenv('DELAY_SECONDS', '15')) # Delay in seconds between messages
+
+# Initialize client with proper session handling for Railway
 client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
 
-
-client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
+# Error handler for connection issues
+@client.on(events.Error)
+async def error_handler(event):
+    print(f"Connection error occurred: {event.text}")
+    await asyncio.sleep(5)  # Wait before reconnecting
 
 async def smart_broadcast(messages):
     sent = 0
