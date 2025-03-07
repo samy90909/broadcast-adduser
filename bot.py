@@ -1,6 +1,7 @@
 
 
 from telethon import TelegramClient, events
+from telethon.sessions import StringSession
 import asyncio
 import shlex
 import random
@@ -14,21 +15,16 @@ load_dotenv()
 # Configuration
 API_ID = int(os.getenv('API_ID'))         # Required: Your Telegram API ID
 API_HASH = os.getenv('API_HASH')          # Required: Your Telegram API Hash
-SESSION_NAME = os.getenv('SESSION_NAME')  # Required: Your session name
+SESSION_STRING = os.getenv('SESSION_STRING')  # Required: Your session string
 ADMIN_ID = int(os.getenv('ADMIN_ID'))    # Required: Your Telegram User ID
 DELAY_SECONDS = int(os.getenv('DELAY_SECONDS', '15'))  # Optional: Delay between messages
 
-# Initialize client with proper session handling
-client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
+# Initialize client with session string
+client = TelegramClient(StringSession(SESSION_STRING), API_ID, API_HASH)
 
 # Connection handling
 async def main():
     print("Starting Telegram Bot...")
-    print("\nFirst time setup:")
-    print("1. You'll be prompted for your phone number")
-    print("2. Telegram will send you a code - enter it when prompted")
-    print("3. If you have two-factor authentication enabled, you'll need to enter your password")
-    
     await client.start()
     print("\nBot is now running!")
     await client.run_until_disconnected()
