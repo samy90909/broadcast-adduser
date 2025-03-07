@@ -18,14 +18,20 @@ SESSION_NAME = os.getenv('SESSION_NAME')  # Required: Your session name
 ADMIN_ID = int(os.getenv('ADMIN_ID'))    # Required: Your Telegram User ID
 DELAY_SECONDS = int(os.getenv('DELAY_SECONDS', '15'))  # Optional: Delay between messages
 
-# Initialize client with proper session handling for Railway
+# Initialize client with proper session handling
 client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
 
-# Error handler for connection issues
-@client.on(events.Error)
-async def error_handler(event):
-    print(f"Connection error occurred: {event.text}")
-    await asyncio.sleep(5)  # Wait before reconnecting
+# Connection handling
+async def main():
+    print("Starting Telegram Bot...")
+    print("\nFirst time setup:")
+    print("1. You'll be prompted for your phone number")
+    print("2. Telegram will send you a code - enter it when prompted")
+    print("3. If you have two-factor authentication enabled, you'll need to enter your password")
+    
+    await client.start()
+    print("\nBot is now running!")
+    await client.run_until_disconnected()
 
 async def smart_broadcast(messages):
     sent = 0
@@ -61,6 +67,6 @@ async def handler(event):
     count = await smart_broadcast(messages)
     await status.edit(f"✅ Broadcast complete!\nSent {count} messages")
 
-print("PythonAnywhere Broadcast System Active!")
-client.start()
-client.run_until_disconnected()
+if __name__ == '__main__':
+    print("Telegram Broadcast Bot Starting...")
+    client.loop.run_until_complete(main())
