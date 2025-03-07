@@ -23,9 +23,11 @@ DELAY_SECONDS = int(os.getenv('DELAY_SECONDS', '15'))  # Optional: Delay between
 client = TelegramClient(StringSession(SESSION_STRING), API_ID, API_HASH)
 
 # Connection handling
+
+
 async def main():
     print("Starting Telegram Bot...")
-    await client.start()
+    await client.start(bot_token=SESSION_STRING)
     print("\nBot is now running!")
     await client.run_until_disconnected()
 
