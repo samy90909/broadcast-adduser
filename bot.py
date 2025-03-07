@@ -12,11 +12,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configuration
-API_ID = int(os.getenv('API_ID', '29563112'))  # Your API ID
-API_HASH = os.getenv('API_HASH', 'd15f1b48e5746765542748e72146c4fe')   # Your API hash
-SESSION_NAME = os.getenv('SESSION_NAME', 'smart_broadcaster') # Your session name
-ADMIN_ID = int(os.getenv('ADMIN_ID', '8135139895')) # Your Telegram ID
-DELAY_SECONDS = int(os.getenv('DELAY_SECONDS', '15')) # Delay in seconds between messages
+API_ID = int(os.getenv('API_ID'))         # Required: Your Telegram API ID
+API_HASH = os.getenv('API_HASH')          # Required: Your Telegram API Hash
+SESSION_NAME = os.getenv('SESSION_NAME')  # Required: Your session name
+ADMIN_ID = int(os.getenv('ADMIN_ID'))    # Required: Your Telegram User ID
+DELAY_SECONDS = int(os.getenv('DELAY_SECONDS', '15'))  # Optional: Delay between messages
 
 # Initialize client with proper session handling for Railway
 client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
