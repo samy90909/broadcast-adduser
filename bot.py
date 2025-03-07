@@ -27,7 +27,7 @@ client = TelegramClient(StringSession(SESSION_STRING), API_ID, API_HASH)
 
 async def main():
     print("Starting Telegram Bot...")
-    await client.start(bot_token=SESSION_STRING)
+    await client.start()
     print("\nBot is now running!")
     await client.run_until_disconnected()
 
