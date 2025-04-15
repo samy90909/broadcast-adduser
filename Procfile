@@ -1,1 +1,1 @@
-worker: python group_migration_bot.py
+worker: python bot.py
